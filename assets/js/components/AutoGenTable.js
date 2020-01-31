@@ -30,18 +30,30 @@ function AutoGenTable(props) {
     return (
         <div>
             <table border={1}>
+
+
+                {/*TABLE HEADER START*/}
                 <thead>
                 <tr>
+
+                    {/*GENERATE COLUMNS*/}
                     {columns.map(text => (
                         <th key={'col' + text}>{text}</th>
                     ))}
+
+
                     <th>
                         Actions
                     </th>
                 </tr>
                 </thead>
+                {/*TABLE HEADER END*/}
+
+
                 <tbody>
                 <tr>
+
+                    {/*TOP ADD SECTION OF THE TABLE START*/}
                     {columns.map(text => (
                         <td key={'add ' + text}>
                             {text !== 'id' && (
@@ -55,6 +67,10 @@ function AutoGenTable(props) {
                             )}
                         </td>
                     ))}
+                    {/*TOP ADD SECTION OF THE TABLE END*/}
+
+
+                    {/*CREATE BUTTON START*/}
                     <td>
                         <button onClick={() => {
                             let data = {};
@@ -69,23 +85,38 @@ function AutoGenTable(props) {
                         }}>Add
                         </button>
                     </td>
+                    {/*CREATE BUTTON END*/}
+
+
                 </tr>
+
+
+                {/*UPDATE AND DATA FIELDS*/}
                 {props.data.map((item, index) => (
                     <tr key={index}>
+
+
+                        {/*SHOW EDIT INPUT OR THE COLUMN ITEM START*/}
                         {columns.map(text => (
                             <td key={'field' + text}>
                                 {
-                                    editIsClicked === item.id ?
+                                    editIsClicked === item.id && text !== 'id' ?
+
                                     <input type="text" value={state[text].val} onChange={event => {
                                         state[text].fn(event.target.value);
                                     }}/>
-                                                              :
-                                    item[text]
+                                                                               :
+                                    item[text] === null || item[text] === undefined || item[text] === '' ? 'N/A' : item[text]
                                 }
                             </td>
                         ))}
+                        {/*SHOW EDIT INPUT OR THE COLUMN ITEM END*/}
+
+
                         <td>
 
+                            {/*DATA BUTTONS START*/}
+                            {/*IF EDIT IS CLICKED REPLACE THE EDIT AND DELETE BUTTON FOR DONE AND CANCEL BUTTONS / MUST MATCH ID*/}
                             {editIsClicked === item.id ?
                              <Fragment>
                                  <button onClick={() => {
@@ -119,8 +150,7 @@ function AutoGenTable(props) {
                                  </button>
                              </Fragment>
                             }
-
-
+                            {/*DATA BUTTONS END*/}
                         </td>
                     </tr>
                 ))}

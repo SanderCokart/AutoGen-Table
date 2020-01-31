@@ -9,16 +9,14 @@ class TestContextProvider extends React.Component {
             data: [
                 {
                     id: 1,
-                    task: 'taskdata1',
-                    category: 'categorydata1',
-                    stuff: 'hello',
-                    test: 'test'
+                    firstName: 'Sander',
+                    lastName: 'Cokart',
+                    age: 21,
                 }, {
                     id: 2,
-                    task: 'taskdata2',
-                    category: 'categorydata2',
-                    stuff: 'hello',
-                    test: 'test'
+                    firstName: 'Sander',
+                    lastName: 'Lanting',
+                    age: null,
                 },
             ],
         };
@@ -35,14 +33,15 @@ class TestContextProvider extends React.Component {
 
 
     updateTodo(id, data) {
+
         let todos = [...this.state.data];
         let todo = todos.find(todo => todo.id === id);
 
-        todo.task = data.task;
-        todo.category = data.category;
-        todo.stuff = data.stuff;
+        const columnNames = Object.keys(data);
 
-        console.log(todos);
+        columnNames.forEach(columnName => {
+            todo[columnName] = data[columnName];
+        });
 
         this.setState({
             data: todos,
